@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Jolly+Lodger|Inter:wght@400;600" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>WorkSphere - Virtual Workspace</title>
+    <style>
+        form {
+            overflow: scroll;
+        }
+
+        form * {
+            display: flex;
+            padding: 30px;
+
+        }
+
+        .helo {
+            height: 80vh;
+            width: 150vh;
+            background-image: url(image/plan.webp);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .helo * {
+            z-index: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup {
+            position:relative;
+            background-color: rgba(58, 172, 172, 0.24);   
+        }
+    </style>
+</head>
+
+<body class="flex justify-center item-center">
+    <div class="container flex justify-center item-center bg--300 w-full h-full p-10">
+        <nav class="flex ">
+            <div>
+                <button class="add border-[10px]" onclick="creat()"><i class="fa-solid fa-plus"></i></button>
+                <button></button>
+            </div>
+            <div class="employes flex flex-col justify-center item-between w-[300px]">
+                <div class="popup"></div>
+                <form action="" class="ajouter w-[300px] h-[900px] bg-red-500 p-10 hidden">
+
+                    <label for="nom">Nom</label>
+                    <input type="text" placeholder="entre le nom " id="nom" required>
+
+                    <label for="role">role</label>
+                    <select id="role">
+                        <option value="">le role d'employes</option>
+                        <option value="">Réceptionnistes</option>
+                        <option value="">Techniciens IT</option>
+                        <option value=""> Agents de sécurité</option>
+                        <option value="">autre</option>
+                    </select>
+
+                    <label for="email">E-mail</label>
+                    <input type="email" placeholder="entre le email" id="email" required>
+
+                    <label for="tele">Téléphone</label>
+                    <input type="text" placeholder="entre le numero de téléphone" id="tele" required>
+
+                    <label for="img">Image</label>
+                    <input type="url" placeholder="entre l'url de votre image " id="img" required>
+
+                    <label for="img">experience</label>
+
+                    <label for="">l'entreprise</label>
+                    <input type="text" placeholder="entre le locale de votre experience " id="local" required>
+
+                    <label for="">le nom de l'experience </label>
+                    <input type="text" placeholder="entre le nom de l'experience" id="nameEx" required>
+
+                    <label for="">date de debut</label>
+                    <input type="date" id="start" required>
+
+                    <label for="">date de fin</label>
+                    <input type="date" id="now" required>
+                    <button class="ajouter">Ajouter experience</button>
+
+                    <button type="button" onclick="add()"><i class="fa-solid fa-square-plus"></i></button>
+
+                </form>
+
+            </div>
+        </nav>
+        <div class="helo lg grid grid-cols-8 grid-rows-6">
+            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-1 col-span-3 row-span-2"><i
+                    class="fa-solid fa-plus border-[5px] bg-lime-400"></i></div>
+
+            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-1 col-span-3 row-span-4"><i
+                    class="fa-solid fa-plus border-[5px] bg-lime-400"></i></div>
+
+            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-5 col-span-2 row-span-2 row-start-1">
+                <i class="fa-solid fa-plus border-[5px] bg-lime-400"></i>
+            </div>
+
+            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-5 col-span-2 row-span-2 row-start-5">
+                <i class="fa-solid fa-plus border-[5px] bg-lime-400"></i>
+            </div>
+
+            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-7 col-span-2 row-span-2 row-start-1">
+                <i class="fa-solid fa-plus border-[5px] bg-lime-400"></i>
+            </div>
+
+            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-7 col-span-2 row-span-2 row-start-5">
+                <i class="fa-solid fa-plus border-[5px] bg-lime-400"></i>
+            </div>
+        </div>
+    </div>
+    <script src="./javascript/java.js"></script>
+</body>
+
+</html>
