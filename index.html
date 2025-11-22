@@ -1,5 +1,13 @@
+
+
+
+
+<!-- html -->
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +26,7 @@
 
         }
 
-        .helo {
+        .hero {
             height: 80vh;
             width: 150vh;
             background-image: url(image/plan.webp);
@@ -26,7 +34,7 @@
             background-repeat: no-repeat;
         }
 
-        .helo * {
+        .hero * {
             z-index: 40px;
             display: flex;
             justify-content: center;
@@ -41,15 +49,18 @@
 </head>
 
 <body class="flex justify-center item-center">
-    <div class="container flex justify-center item-center bg--300 w-full h-full p-10">
+ <div class="container flex justify-center item-center bg-orange-300 w-full h-full p-10">
         <nav class="flex ">
             <div>
+                <h1>Les employeur</h1>
+                <div class="content"></div>
                 <button class="add border-[10px]" onclick="creat()"><i class="fa-solid fa-plus"></i></button>
                 <button></button>
             </div>
             <div class="employes flex flex-col justify-center item-between w-[300px]">
                 <div class="popup"></div>
                 <form action="" class="ajouter w-[300px] h-[900px] bg-red-500 p-10 hidden">
+                    <div class="text-red-700"><i class="fa-solid fa-x text-white" onclick="formehidden()"></i></div>
 
                     <label for="nom">Nom</label>
                     <input type="text" placeholder="entre le nom " id="nom" required>
@@ -57,10 +68,12 @@
                     <label for="role">role</label>
                     <select id="role">
                         <option value="">le role d'employes</option>
-                        <option value="">Réceptionnistes</option>
-                        <option value="">Techniciens IT</option>
-                        <option value=""> Agents de sécurité</option>
-                        <option value="">autre</option>
+                        <option value="Reception">Réceptionnistes</option>
+                        <option value="IT">Techniciens IT</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Nettoyage">Nettoyage</option>
+                        <option value="securite"> Agents de sécurité</option>
+                        <option value="autre">autre</option>
                     </select>
 
                     <label for="email">E-mail</label>
@@ -72,53 +85,53 @@
                     <label for="img">Image</label>
                     <input type="url" placeholder="entre l'url de votre image " id="img" required>
 
-                    <label for="img">experience</label>
+                    <label for="img">Experience professionnel</label>
 
-                    <label for="">l'entreprise</label>
-                    <input type="text" placeholder="entre le locale de votre experience " id="local" required>
+                    <label for="local">l'entreprise</label>
+                    <input type="text" placeholder="entre le locale de votre experience" id="local" required>
 
-                    <label for="">le nom de l'experience </label>
-                    <input type="text" placeholder="entre le nom de l'experience" id="nameEx" required>
+                    <label for="">le nom de post</label>
+                    <input type="text" placeholder="entre le nom de poste de votre l'experience" id="nameEx" required>
 
-                    <label for="">date de debut</label>
+                    <label for="start">date de debut</label>
                     <input type="date" id="start" required>
 
-                    <label for="">date de fin</label>
-                    <input type="date" id="now" required>
-                    <button class="ajouter">Ajouter experience</button>
+                    <label for="end">date de fin</label>
+                    <input type="date" id="end" required>
+                    <button class="ajouter"><i class="fa-solid fa-square-plus"></i></button>
 
-                    <button type="button" onclick="add()"><i class="fa-solid fa-square-plus"></i></button>
+                    <button type="button" onclick="add()"><i class="fa-solid fa-floppy-disk"></i></button>
 
                 </form>
 
             </div>
         </nav>
-        <div class="helo lg grid grid-cols-8 grid-rows-6">
-            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-1 col-span-3 row-span-2"><i
-                    class="fa-solid fa-plus border-[5px] bg-lime-400"></i></div>
+        <div class="hero lg grid grid-cols-8 grid-rows-6">
+            <div onclick="workers()" class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-1 col-span-3 row-span-2"><i
+                    class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i></div>
 
             <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-1 col-span-3 row-span-4"><i
-                    class="fa-solid fa-plus border-[5px] bg-lime-400"></i></div>
+                    class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i></div>
 
             <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-5 col-span-2 row-span-2 row-start-1">
-                <i class="fa-solid fa-plus border-[5px] bg-lime-400"></i>
+                <i class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i>
             </div>
 
             <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-5 col-span-2 row-span-2 row-start-5">
-                <i class="fa-solid fa-plus border-[5px] bg-lime-400"></i>
+                <i class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i>
             </div>
 
             <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-7 col-span-2 row-span-2 row-start-1">
-                <i class="fa-solid fa-plus border-[5px] bg-lime-400"></i>
+                <i class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i>
             </div>
 
             <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-7 col-span-2 row-span-2 row-start-5">
-                <i class="fa-solid fa-plus border-[5px] bg-lime-400"></i>
+                <i class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i>
             </div>
         </div>
     </div>
+   
     <script src="./javascript/java.js"></script>
 </body>
-
 
 </html>
