@@ -1,35 +1,112 @@
- let data = [];
-console.log(data);
+let index = 0;
+let experiences = []
 
+// data pour tester
+let data = [
+    {
+        id: 1,
+        name: "Ahmed El Fassi",
+        role: "Nettoyage",
+        email: "ahmed.fassi@gmail.com",
+        tele: "0600000001",
+        img: "https://randomuser.me/api/portraits/men/11.jpg",
+        local: "unassigned",
+        experiences: [
+            {
+                localEx: "Hotel Casablanca",
+                nameEx: "Reception Manager",
+                startDate: "2022-01-01",
+                endDate: "2023-01-01",
+            }
+        ]
+    },
+    {
+        id: 2,
+        name: "Sara Benali",
+        role: "IT",
+        email: "sara.benali@gmail.com",
+        tele: "0600000002",
+        img: "https://randomuser.me/api/portraits/women/12.jpg",
+        local: "unassigned",
+        experiences: [
+            {
+                localEx: "IT Department",
+                nameEx: "Network Technician",
+                startDate: "2021-03-01",
+                endDate: "2022-12-31",
+            }
+        ]
+    },
+    {
+        id: 3,
+        name: "Youssef Idrissi",
+        role: "Manager",
+        email: "y.idrissi@gmail.com",
+        tele: "0600000003",
+        img: "https://randomuser.me/api/portraits/men/13.jpg",
+        local: "unassigned",
+        experiences: [
+            {
+                localEx: "Hotel Casablanca",
+                nameEx: "General Manager",
+                startDate: "2020-06-01",
+                endDate: "2024-06-01",
+            }
+        ]
+    },
+    {
+        id: 4,
+        name: "Khadija El Amrani",
+        role: "Securite",
+        email: "khadija.amrani@gmail.com",
+        tele: "0600000004",
+        img: "https://randomuser.me/api/portraits/women/14.jpg",
+        local: "unassigned",
+        experiences: [
+            {
+                localEx: "Security Department",
+                nameEx: "Security Guard",
+                startDate: "2023-01-01",
+                endDate: "2024-01-01",
+            }
+        ]
+    }
+];
+
+
+console.log(data);
+let compt = 0
+console.log(experiences)
 // Afficher les données dans le tableau
 function displaydata() {
     console.log("disply function");
     const content = document.querySelector(".content")
-    data.forEach(function (object) {
+    let filtredData = data.filter(d => d.local === "unassigned");
+    content.innerHTML = ""
+    filtredData.forEach(function (object) {
         const Worker = document.createElement("div")
-        Worker.innerHTML="";
-        Worker.classList.add = "worker"
+        Worker.classList.add("worker")
         Worker.innerHTML = `
              <img src=${object.img} alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
                <div class="info" >
+        <p><strong>Nom :</strong> ${object.name}</p>
         <p><strong>Rôle :</strong> ${object.role}</p>
-        <p><strong>Email :</strong> ${object.email}</p>
-        <p><strong>Téléphone :</strong> ${object.tele}</p>
-        <p><strong>L'entreprise :</strong> ${object.local}</p>
-        <p><strong>Son role dans le travaille :</strong> ${object.nameEx}</p>
-        <p><strong>Début :</strong> ${object.startDate}</p>
-        <p><strong>Fin :</strong> ${object.endDate}</p>
+
     </div>
 
          `
+        Worker.style.borderRadius = "40px"
+        Worker.style.backgroundColor = "#fda1c9"
+        Worker.style.padding = "20px"
+        Worker.style.width = "300px"
+        Worker.style.display = "flex"
+        Worker.style.margin = "20px"
         content.appendChild(Worker)
     })
 
-    // let info = document.querySelector(".info")
-    // info.addEventListener("click", () => {
-    //     info.style.display = "block"
-    // })
 }
+
+displaydata();
 
 // Afficher le formulaire d'ajout
 function creat() {
@@ -43,19 +120,41 @@ function check(think) {
 // Ajouter un nouvel employé
 function add() {
     console.log("add function")
+    let id = index++
     let name = document.querySelector("#nom").value;
     let role = document.querySelector("#role").value;
     let email = document.querySelector("#email").value;
     let tele = document.querySelector("#tele").value;
     let img = document.querySelector("#img").value;
-    let local = document.querySelector("#local").value;
-    let nameEx = document.querySelector("#nameEx").value;
-    let startDate = document.querySelector("#start").value;
-    let endDate = document.querySelector("#end").value;
-    check(endDate)
+    const addexp = document.querySelector(".addexp")
+    const exps = document.querySelector(".exps")
+    // check(endDate)
 
+
+    const toutexp = exps.querySelectorAll(".exp")
+    Array.from(toutexp).forEach(exp => {
+        let localEx = exp.querySelector("#local").value;
+        let nameEx = exp.querySelector("#nameEx").value;
+        let startDate = exp.querySelector("#start").value;
+        let endDate = exp.querySelector("#end").value;
+
+        if (!startDate || !endDate || !nameEx || !localEx) {
+            alert("replire tout les champs de l'experience")
+        } else {
+            console.log("l'experience a ete bien remplie")
+
+        }
+        let experience = {
+            localEx: localEx,
+            nameEx: nameEx,
+            startDate: startDate,
+            endDate: endDate
+        }
+
+        experiences.push(experience)
+    })
     // Vérifier que les dates sont correctes
-    if (!startDate || !endDate || !name || !role || !email || !tele || !img || !nameEx || !local) {
+    if (!name || !role || !email || !tele || !img) {
         alert("Veuillez remplire tout les information!");
         return;
     } else {
@@ -69,37 +168,98 @@ function add() {
         email: email,
         tele: tele,
         img: img,
-        nameEx: nameEx,
-        local: local,
-        startDate: startDate,
-        endDate: endDate
-
+        experiences: experiences,
+        local: "unassigned"
     };
 
     data.push(newperson);
 
-    // Réafficher le tableau
+    // reafficher le tableau
     displaydata();
 
-    // Cacher le formulaire
-    document.querySelector(".add").style.display = "block";
-    document.querySelector(".ajouter").style.display = "none";
 
-    // Vider les champs du formulaire
+    // pour fermer la formule 
+    formehidden()
+
+    // pour vider les champs du formulaire
     document.querySelector("#nom").value = "";
     document.querySelector("#role").value = "";
     document.querySelector("#email").value = "";
     document.querySelector("#tele").value = "";
     document.querySelector("#img").value = "";
     document.querySelector("#start").value = "";
-    document.querySelector("#now").value = "";
+    document.querySelector("#end").value = "";
 }
 
-function workers() {
+function formehidden() {
+    document.querySelector(".ajouter").style.display = "none"
+    document.querySelector(".add").style.display = "block"
+}
 
-    displaydata()
+function displayforadd() {
+    const all = document.querySelectorAll(".all");
+    const element = document.querySelectorAll(".element");
+    for (let i = 0; i < all.length; i++) {
+        all[i].addEventListener("click", function () {
+            element.forEach(e => e.hidden = true)
+            element[i].hidden = !element[i].hidden
+            return;
+        })
+    }
 }
-function formehidden(){
-    document.querySelector(".ajouter").style.display ="none"
-    document.querySelector(".add").style.display ="block"
+
+
+
+function creat() {
+    const form = document.querySelector('.ajouter');
+    const arrier = document.getElementById('arrier');
+
+    form.classList.add('active');
+    arrier.classList.add('active');
 }
+
+function formehidden() {
+    const form = document.querySelector('.ajouter');
+    const arrier = document.getElementById('arrier');
+
+    form.classList.remove('active');
+    arrier.classList.remove('active');
+}
+
+
+// Close form when clicking on arrier
+document.getElementById('arrier').addEventListener('click', function () {
+    formehidden();
+});
+
+const addexp = document.querySelector(".addexp")
+
+addexp.addEventListener("click", () => {
+    const exps = document.querySelector(".exps")
+    const exp = document.createElement("div")
+    exp.className = "exp border border-black p-4 rounded-lg bg-red-500 w-full"
+    exp.innerHTML = ` <div class="input">
+
+                                <label for="local">l'entreprise</label><br>
+                                <input type="text" placeholder="entre le locale de votre experience" id="local"
+                                    required><br>
+                            </div>
+                            <div class="input">
+
+                                <label for="">le nom de post</label><br>
+                                <input type="text" placeholder="entre le nom de poste de votre l'experience" id="nameEx"
+                                    required><br>
+                            </div>
+                            <div class="input">
+
+                                <label for="start">date de debut</label><br>
+                                <input type="date" id="start" required><br>
+                            </div>
+                            <div class="input">
+
+                                <label for="end">date de fin</label><br>
+                                <input type="date" id="end" required><br>
+                            </div>`
+    exps.appendChild(exp)
+
+})
