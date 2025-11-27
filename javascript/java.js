@@ -291,12 +291,10 @@ function serveurs() {
             const element = document.querySelectorAll(".element")
             element.forEach(e => e.hidden = "true")
             displaydata();
+        salleremover(content , worker,emp , picked) 
         });
     });
 };
-const delet = document.querySelector(".delet").document.addEventListener("click", () => {
-
-})
 
 function archives() {
     displayforadd();
@@ -339,9 +337,11 @@ function archives() {
             const element = document.querySelectorAll(".element");
             element.forEach(e => e.hidden = true)
             displaydata();
+        salleremover(content , worker,emp , picked) 
         });
     });
 };
+
 function securite() {
     displayforadd();
 
@@ -349,7 +349,7 @@ function securite() {
     const emp = document.querySelector(".empS");
 
     content.innerHTML = "";
-let filtredData = data.filter(d => d.role === "securite" && d.local !== "securite")
+    let filtredData = data.filter(d => d.role === "securite" && d.local !== "securite")
     filtredData.forEach(object => {
 
         const worker = document.createElement("div");
@@ -378,9 +378,11 @@ let filtredData = data.filter(d => d.role === "securite" && d.local !== "securit
             const element = document.querySelectorAll(".element")
             element.forEach(e => e.hidden = true);
             displaydata()
+        salleremover(content , worker,emp , picked) 
         });
     });
 }
+
 function personnel() {
     displayforadd();
 
@@ -388,7 +390,7 @@ function personnel() {
     const emp = document.querySelector(".empP");
 
     content.innerHTML = "";
-  data.forEach(object => {
+    data.forEach(object => {
         const worker = document.createElement("div");
         worker.classList.add("worker");
         worker.dataset.id = object.id;
@@ -403,7 +405,7 @@ function personnel() {
             object.local = "personnel"
             picked.local = object.local
             picked.dataset.id = object.id;
-            picked.innerHTML =`
+            picked.innerHTML = `
             <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
              <button class="delet bg-red-500 border rounded-[20px] h-[30px] w-[30px] text-[20px]"><i class="fa-solid fa-x"></i></button>
            
@@ -413,7 +415,7 @@ function personnel() {
             const element = document.querySelectorAll(".element");
             element.forEach(e => e.hidden = true)
             displaydata();
-
+        salleremover(content , worker,emp , picked) 
         })
 
     });
@@ -454,17 +456,17 @@ function reception() {
         `;
 
 
-            picked.addEventListener("click", function () {
-                content.appendChild(worker);
-            });
+
 
             emp.appendChild(picked);
             const element = document.querySelectorAll(".element");
             element.forEach(e => e.hidden = true)
             displaydata();
+        salleremover(content , worker,emp , picked) 
         });
     });
 }
+
 function manager() {
     displayforadd();
 
@@ -489,22 +491,29 @@ function manager() {
             const picked = document.createElement("div");
             picked.classList.add("worker");
             picked.dataset.id = object.id;
-            picked.innerHTML =  `
+            picked.innerHTML = `
             <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
              <button class="delet bg-red-500 border rounded-[20px] h-[30px] w-[30px] text-[20px]"><i class="fa-solid fa-x"></i></button>
            
         `;
 
-
-            picked.addEventListener("click", function() {
-
-                content.appendChild(worker);
-            });
-
             emp.appendChild(picked);
             let element = document.querySelectorAll(".element")
             element.forEach(e => e.hidden = true)
             displaydata()
+        salleremover(content , worker,emp , picked) 
         });
     });
+}
+
+function salleremover(content , worker,emp , picked) {
+    const dele = document.querySelectorAll(".delet")
+    dele.forEach(e=> {
+
+        e.addEventListener("click", () => {
+            content.appendChild(worker);
+            emp.remove(picked)
+        })
+
+    })
 }
