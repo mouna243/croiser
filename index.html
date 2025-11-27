@@ -1,10 +1,3 @@
-
-
-
-
-<!-- html -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,121 +9,313 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>WorkSphere - Virtual Workspace</title>
     <style>
-        form {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section {
+            position: relative;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            min-height: 150px;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .room {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 4px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .all {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .all:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        .element {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            padding: 15px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            flex-grow: 1;
+        }
+
+        .ajouter {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            padding: 10px;
+            background: #EEAECA;
+            background: linear-gradient(rgba(238, 174, 202, 1) 0%, rgba(221, 176, 208, 1) 19%, rgba(208, 178, 213, 1) 34%, rgba(148, 187, 233, 1) 100%);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 100;
             overflow: scroll;
-        }
-
-        form * {
             display: flex;
-            padding: 30px;
-
+            flex-direction: column;
+            cursor: pointer;
         }
 
-        .hero {
-            height: 80vh;
-            width: 150vh;
-            background-image: url(image/plan.webp);
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-        }
-
-        .hero * {
-            z-index: 40px;
+        .ajouter * {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
-        .popup {
-            position:relative;
-            background-color: rgba(58, 172, 172, 0.24);   
+        .ajouter.active {
+            right: 0;
+        }
+
+        .arrier {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            display: none;
+        }
+
+        .arrier.active {
+            display: block;
+        }
+
+        input {
+            height: 50px;
+            width: 300px;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
         }
     </style>
 </head>
 
-<body class="flex justify-center item-center">
- <div class="container flex justify-center item-center bg-orange-300 w-full h-full p-10">
-        <nav class="flex ">
-            <div>
-                <h1>Les employeur</h1>
-                <div class="content"></div>
-                <button class="add border-[10px]" onclick="creat()"><i class="fa-solid fa-plus"></i></button>
-                <button></button>
+<body class="relative">
+    <div class="arrier" id="arrier"></div>
+    <div class="h-[100vh] flex p-[15px] items-center flex-col md:flex-row gap-y-4 ">
+        <nav class=" w-full md:w-[30%]">
+            <div class="flex flex-col items-center">
+                <h1 class="text-[30px]">WORKERS</h1>
+                <div class="content "></div>
+                <button class="add bg-green-400 rounded-lg border border-black py-2 px-4 hover:bg-green-500"
+                    onclick="creat()"><i class="fa-solid fa-plus"></i><span>Ajout Employee</span>
+                </button>
             </div>
-            <div class="employes flex flex-col justify-center item-between w-[300px]">
-                <div class="popup"></div>
-                <form action="" class="ajouter w-[300px] h-[900px] bg-red-500 p-10 hidden">
-                    <div class="text-red-700"><i class="fa-solid fa-x text-white" onclick="formehidden()"></i></div>
+            <div class="employes flex flex-col justify-center items-center w-[300px] ">
+                <form id="addForm" action="" class="ajouter w-[500px] h-full">
+                    <div class="text-red-700"><i class="fa-solid fa-x text-white cursor-pointer"
+                            onclick="formehidden()"></i></div>
+                    <div class="input">
+                        <label for="nom">Nom</label><br>
+                        <input type="text" placeholder="entre le nom " id="nom" required><br>
+                    </div>
+                    <div class="input">
+                        <label for="role">Role</label><br>
+                        <select id="role" class="p-4 rounded-[10px] w-[300px]">
+                            <option value="">le role d'employes</option>
+                            <option value="Reception">Réceptionnistes</option>
+                            <option value="IT">Techniciens IT</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Nettoyage">Nettoyage</option>
+                            <option value="securite"> Agents de sécurité</option>
+                            <option value="autre">autre</option>
+                        </select><br>
+                    </div>
+                    <div class="input">
 
-                    <label for="nom">Nom</label>
-                    <input type="text" placeholder="entre le nom " id="nom" required>
+                        <label for="email">E-mail</label><br>
+                        <input type="email" placeholder="entre le email" id="email" required><br>
+                    </div>
+                    <div class="input">
+                        <label for="tele">Téléphone</label><br>
+                        <input type="text" placeholder="entre le numero de téléphone" id="tele" required><br>
+                    </div>
+                    <div class="input">
 
-                    <label for="role">role</label>
-                    <select id="role">
-                        <option value="">le role d'employes</option>
-                        <option value="Reception">Réceptionnistes</option>
-                        <option value="IT">Techniciens IT</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Nettoyage">Nettoyage</option>
-                        <option value="securite"> Agents de sécurité</option>
-                        <option value="autre">autre</option>
-                    </select>
+                        <label for="img">Image</label><br>
+                        <input type="url" placeholder="entre l'url de votre image " id="img" required><br>
+                    </div>
+                    <div class="input">
 
-                    <label for="email">E-mail</label>
-                    <input type="email" placeholder="entre le email" id="email" required>
-
-                    <label for="tele">Téléphone</label>
-                    <input type="text" placeholder="entre le numero de téléphone" id="tele" required>
-
-                    <label for="img">Image</label>
-                    <input type="url" placeholder="entre l'url de votre image " id="img" required>
-
-                    <label for="img">Experience professionnel</label>
-
-                    <label for="local">l'entreprise</label>
-                    <input type="text" placeholder="entre le locale de votre experience" id="local" required>
-
-                    <label for="">le nom de post</label>
-                    <input type="text" placeholder="entre le nom de poste de votre l'experience" id="nameEx" required>
-
-                    <label for="start">date de debut</label>
-                    <input type="date" id="start" required>
-
-                    <label for="end">date de fin</label>
-                    <input type="date" id="end" required>
-                    <button class="ajouter"><i class="fa-solid fa-square-plus"></i></button>
-
-                    <button type="button" onclick="add()"><i class="fa-solid fa-floppy-disk"></i></button>
+                        <div class="rounded-[30px] bg-fuchsia-300 flex flex-col justify-center items-center p-10 ">
+                            <div>Experience professionnel<br>
+                            </div>
+                            <div class="exps flex flex-col gap-4"></div>
+                            <button class="addexp bg-lime-400 rounded-lg p-2 mt-2">ajout experience
+                            </button>
+                        </div>
+                        <button type="button" onclick="add()"
+                            class="bg-lime-300 h-[50px] w-[200px] rounded-[20px] mt-3 hover:bg-lime-500"><i
+                                class="fa-solid fa-floppy-disk "></i></button>
+                    </div>
 
                 </form>
 
             </div>
         </nav>
-        <div class="hero lg grid grid-cols-8 grid-rows-6">
-            <div onclick="workers()" class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-1 col-span-3 row-span-2"><i
-                    class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i></div>
+        <div class="relative">
+            <div class="salls grid grid-cols-8 grid-rows-12 w-full h-full absolute">
 
-            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-1 col-span-3 row-span-4"><i
-                    class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i></div>
 
-            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-5 col-span-2 row-span-2 row-start-1">
-                <i class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i>
+                <div onclick="personnel()"
+                    class="section text-white  bg-green-500/30 col-start-1 col-end-4 row-start-1 row-end-5">
+                    <div class="empP"></div>
+
+                    <div class="room">personnel</div>
+
+                    <div class="all rounded-[50px] text-white ">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                    <div class=" element personnel bg-green-300 " hidden>
+                        <div class="content">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div onclick="reception()"
+                    class="section text-white text-[20px] bg-red-700/30 col-span-3 row-start-5 row-end-13">
+                    <div class="empR"></div>
+                    <div class="room">reception</div>
+
+
+                    <div class="all rounded-[50px]  text-white ">
+                        <i class="fa-solid fa-plus rounded-[50px] "></i>
+                    </div>
+                    <div class="element reception bg-green-300 " hidden>
+                        <div class="content">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div onclick="archives()"
+                    class="section text-white text-[20px] ml-10 bg-red-700/30 col-start-5 col-end-7 row-span-4">
+                    <div class="empA"></div>
+                    <div class="room">archives </div>
+
+
+                    <div class="all rounded-[50px]  text-white ">
+
+                        <i class="fa-solid fa-plus rounded-[50px]  "></i>
+                    </div>
+                    <div class="element archives bg-green-300 " hidden>
+                        <div class="content">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div onclick="securite()"
+                    class="section text-white text-[20px] bg-red-700/30 ml- col-start-7 col-end-9 row-span-4">
+                    <div class="empS"></div>
+                    <div class="room"> securite </div>
+
+
+                    <div class="all rounded-[50px] text-white ">
+                        <i class="fa-solid fa-plus rounded-[50px] "></i>
+
+                    </div>
+                    <div class="element securite bg-green-300 " hidden>
+                        <div class="content">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div onclick="manager()"
+                    class="section text-white text-[20px] bg-green-700/30 ml-11 col-start-5 col-end-7 row-start-9 row-end-13">
+                    <div class="empM"></div>
+                    <div class="room">Conférence </div>
+
+
+                    <div class="all rounded-[50px] text-white ">
+                        <i class="fa-solid fa-plus rounded-[50px] "></i>
+                    </div>
+
+                    <div class="element manager bg-green-300 " hidden>
+                        <div class="content">
+                        </div>
+                    </div>
+                </div>
+
+                <div onclick="serveurs()"
+                    class="section text-white text-[20px] bg-red-700/30 ml-7 col-start-7 col-end-9 row-start-9 row-end-13">
+
+                    <div class="empSER"></div>
+                    <div class="room"> serveurs</div>
+                    <div class="all rounded-[50px] text-white ">
+
+                        <i class="fa-solid fa-plus rounded-[50px] "></i>
+                    </div>
+                    <div class="element serveurs bg-green-300 " hidden>
+                        <div class="content">
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
-
-            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-5 col-span-2 row-span-2 row-start-5">
-                <i class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i>
-            </div>
-
-            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-7 col-span-2 row-span-2 row-start-1">
-                <i class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i>
-            </div>
-
-            <div class="h-[100%] w-[100%] z-40 text-red-700 text-[40px] col-start-7 col-span-2 row-span-2 row-start-5">
-                <i class="fa-solid fa-plus rad rounded-[50px] bg-lime-400"></i>
-            </div>
+            <img src="./image/plan.webp" alt="" class="w-full h-[500px] lg:h-auto -z-1">
         </div>
     </div>
-   
     <script src="./javascript/java.js"></script>
 </body>
 
