@@ -2,8 +2,7 @@ let index = 0;
 let experiences = []
 
 // data pour tester
-let data = [
-    {
+let data = [{
         id: 1,
         name: "Ahmed El Fassi",
         role: "Nettoyage",
@@ -11,14 +10,12 @@ let data = [
         tele: "0600000001",
         img: "https://randomuser.me/api/portraits/men/11.jpg",
         local: "unassigned",
-        experiences: [
-            {
-                localEx: "Hotel Casablanca",
-                nameEx: "Reception Manager",
-                startDate: "2022-01-01",
-                endDate: "2023-01-01",
-            }
-        ]
+        experiences: [{
+            localEx: "Hotel Casablanca",
+            nameEx: "Reception Manager",
+            startDate: "2022-01-01",
+            endDate: "2023-01-01",
+        }]
     },
     {
         id: 2,
@@ -28,14 +25,12 @@ let data = [
         tele: "0600000002",
         img: "https://randomuser.me/api/portraits/women/12.jpg",
         local: "unassigned",
-        experiences: [
-            {
-                localEx: "IT Department",
-                nameEx: "Network Technician",
-                startDate: "2021-03-01",
-                endDate: "2022-12-31",
-            }
-        ]
+        experiences: [{
+            localEx: "IT Department",
+            nameEx: "Network Technician",
+            startDate: "2021-03-01",
+            endDate: "2022-12-31",
+        }]
     },
     {
         id: 3,
@@ -45,14 +40,12 @@ let data = [
         tele: "0600000003",
         img: "https://randomuser.me/api/portraits/men/13.jpg",
         local: "unassigned",
-        experiences: [
-            {
-                localEx: "Hotel Casablanca",
-                nameEx: "General Manager",
-                startDate: "2020-06-01",
-                endDate: "2024-06-01",
-            }
-        ]
+        experiences: [{
+            localEx: "Hotel Casablanca",
+            nameEx: "General Manager",
+            startDate: "2020-06-01",
+            endDate: "2024-06-01",
+        }]
     },
     {
         id: 4,
@@ -62,14 +55,12 @@ let data = [
         tele: "0600000004",
         img: "https://randomuser.me/api/portraits/women/14.jpg",
         local: "unassigned",
-        experiences: [
-            {
-                localEx: "Security Department",
-                nameEx: "Security Guard",
-                startDate: "2023-01-01",
-                endDate: "2024-01-01",
-            }
-        ]
+        experiences: [{
+            localEx: "Security Department",
+            nameEx: "Security Guard",
+            startDate: "2023-01-01",
+            endDate: "2024-01-01",
+        }]
     }
 ];
 
@@ -263,3 +254,163 @@ addexp.addEventListener("click", () => {
     exps.appendChild(exp)
 
 })
+
+function serveurs() {
+    displayforadd();
+    const content = document.querySelector(".serveurs.element");
+    const emp = document.querySelector(".empSER");
+
+    content.innerHTML = "";
+    let filtredData = data.filter(d => d.role === "IT" && d.local !== "IT")
+    filtredData.forEach(object => {
+
+        const worker = document.createElement("div");
+        worker.classList.add("worker");
+        worker.dataset.id = object.id;
+        worker.innerHTML = `
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+           
+        `;
+
+        content.appendChild(worker);
+
+        worker.addEventListener("click", function () {
+            let picked = document.createElement("div")
+            picked.classList.add("emploi")
+            object.local = "IT"
+            picked.local = object.local
+            picked.dataset.id = object.id
+            picked.innerHTML = `
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+            <button class="delet bg-red-500 border rounded-[20px] h-[30px] w-[30px] text-[20px]"><i class="fa-solid fa-x"></i></button>
+        `;
+            picked.addEventListener("click", function () {
+                content.appendChild(worker)
+            })
+            emp.appendChild(picked);
+            const element = document.querySelectorAll(".element")
+            element.forEach(e => e.hidden = "true")
+            displaydata();
+        });
+    });
+};
+const delet = document.querySelector(".delet").document.addEventListener("click", () => {
+
+})
+
+function archives() {
+    displayforadd();
+
+    const content = document.querySelector(".archives.element");
+    const emp = document.querySelector(".empA");
+
+    content.innerHTML = "";
+    let filtredData = data.filter(d => d.role !== "Nettoyage" && d.local != "archive")
+    filtredData.forEach(object => {
+        const worker = document.createElement("div");
+        worker.classList.add("worker");
+        worker.dataset.id = object.id;
+        worker.innerHTML = `
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+        `;
+
+        content.appendChild(worker);
+
+        worker.addEventListener("click", function () {
+            if (emp.querySelector(`[data-id="${object.id}"]`)) return;
+
+            const picked = document.createElement("div");
+            picked.classList.add("emploi");
+            object.local = "archive"
+            picked.local = object.local
+            picked.dataset.id = object.id;
+            picked.innerHTML = `
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+             <button class="delet bg-red-500 border rounded-[20px] h-[30px] w-[30px] text-[20px]"><i class="fa-solid fa-x"></i></button>
+           
+        `;
+
+
+            picked.addEventListener("click", function () {
+                content.appendChild(worker);
+            });
+
+            emp.appendChild(picked);
+            const element = document.querySelectorAll(".element");
+            element.forEach(e => e.hidden = true)
+            displaydata();
+        });
+    });
+};
+function securite() {
+    displayforadd();
+
+    const content = document.querySelector(".securite.element");
+    const emp = document.querySelector(".empS");
+
+    content.innerHTML = "";
+let filtredData = data.filter(d => d.role === "securite" && d.local !== "securite")
+    filtredData.forEach(object => {
+
+        const worker = document.createElement("div");
+        worker.classList.add("worker");
+        worker.dataset.id = object.id;
+        worker.innerHTML = `
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+        `;
+        content.appendChild(worker);
+
+        worker.addEventListener("click", function () {
+            if (emp.querySelector(`[data-id="${object.id}"]`)) return;
+
+            const picked = document.createElement("div");
+            picked.classList.add("worker");
+            object.local = "securite"
+            picked.local = object.local
+            picked.dataset.id = object.id;
+            picked.innerHTML = `
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+             <button class="delet bg-red-500 border rounded-[20px] h-[30px] w-[30px] text-[20px]"><i class="fa-solid fa-x"></i></button>
+           
+        `;
+
+            emp.appendChild(picked);
+            const element = document.querySelectorAll(".element")
+            element.forEach(e => e.hidden = true);
+            displaydata()
+        });
+    });
+}
+function personnel() {
+    displayforadd();
+
+    const content = document.querySelector(".personnel.element");
+    const emp = document.querySelector(".empP");
+
+    content.innerHTML = "";
+  data.forEach(object => {
+        const worker = document.createElement("div");
+        worker.classList.add("worker");
+        worker.dataset.id = object.id;
+        worker.innerHTML = `
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+        `;
+        content.appendChild(worker)
+        worker.addEventListener("click", function () {
+            if (emp.querySelector(`[data-id="${object.id}"]`)) return;
+            const picked = document.createElement("div")
+            picked.classList.add("emploi")
+            object.local = "personnel"
+            picked.local = object.local
+            picked.dataset.id = object.id;
+            picked.innerHTML = worker.innerHTML;
+
+            emp.appendChild(picked);
+            const element = document.querySelectorAll(".element");
+            element.forEach(e => e.hidden = true)
+            displaydata();
+
+        })
+
+    });
+}
