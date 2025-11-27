@@ -291,7 +291,7 @@ function serveurs() {
             const element = document.querySelectorAll(".element")
             element.forEach(e => e.hidden = "true")
             displaydata();
-        salleremover(content , worker) 
+        salleremover(content , worker,emp , picked) 
         });
     });
 };
@@ -337,7 +337,7 @@ function archives() {
             const element = document.querySelectorAll(".element");
             element.forEach(e => e.hidden = true)
             displaydata();
-        salleremover(content , worker) 
+        salleremover(content , worker,emp , picked) 
         });
     });
 };
@@ -378,7 +378,7 @@ function securite() {
             const element = document.querySelectorAll(".element")
             element.forEach(e => e.hidden = true);
             displaydata()
-        salleremover(content , worker) 
+        salleremover(content , worker,emp , picked) 
         });
     });
 }
@@ -415,7 +415,7 @@ function personnel() {
             const element = document.querySelectorAll(".element");
             element.forEach(e => e.hidden = true)
             displaydata();
-        salleremover(content , worker) 
+        salleremover(content , worker,emp , picked) 
         })
 
     });
@@ -462,7 +462,7 @@ function reception() {
             const element = document.querySelectorAll(".element");
             element.forEach(e => e.hidden = true)
             displaydata();
-        salleremover(content , worker) 
+        salleremover(content , worker,emp , picked) 
         });
     });
 }
