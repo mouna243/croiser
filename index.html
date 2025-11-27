@@ -99,6 +99,61 @@
             max-width: 400px;
             height: 100vh;
             padding: 10px;
+            background: #EEAECA;
+            background: linear-gradient(rgba(238, 174, 202, 1) 0%, rgba(221, 176, 208, 1) 19%, rgba(208, 178, 213, 1) 34%, rgba(148, 187, 233, 1) 100%);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 100;
+            overflow: scroll;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .ajouter * {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .all:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        .element {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            padding: 15px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            flex-grow: 1;
+        }
+
+        .ajouter {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            padding: 10px;
             background: #a9f5b8;
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
             transition: right 0.3s ease;
@@ -129,8 +184,32 @@
             display: none;
         }
 
+        .ajouter.active {
+            right: 0;
+        }
+
+        .arrier {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            display: none;
+        }
+
         .arrier.active {
             display: block;
+        }
+
+        input {
+            height: 50px;
+            width: 300px;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
         }
 
         input {
@@ -152,11 +231,12 @@
             <div class="flex flex-col items-center">
                 <h1 class="text-[30px]">WORKERS</h1>
                 <div class="content "></div>
-                <button class="add bg-green-400 rounded-lg border border-black py-2 px-4 hover:bg-green-500" onclick="creat()"><i class="fa-solid fa-plus"></i><span>Ajout Employee</span>
+                <button class="add bg-green-400 rounded-lg border border-black py-2 px-4 hover:bg-green-500"
+                    onclick="creat()"><i class="fa-solid fa-plus"></i><span>Ajout Employee</span>
                 </button>
             </div>
             <div class="employes flex flex-col justify-center items-center w-[300px] ">
-                <form action="" class="ajouter w-[500px] h-full">
+                <form id="addForm" action="" class="ajouter w-[500px] h-full">
                     <div class="text-red-700"><i class="fa-solid fa-x text-white cursor-pointer"
                             onclick="formehidden()"></i></div>
                     <div class="input">
@@ -191,14 +271,16 @@
                     </div>
                     <div class="input">
 
-                        <div class="rounded-[30px] bg-red-500 flex flex-col justify-center items-center p-10 ">
+                        <div class="rounded-[30px] bg-fuchsia-300 flex flex-col justify-center items-center p-10 ">
                             <div>Experience professionnel<br>
                             </div>
                             <div class="exps flex flex-col gap-4"></div>
-                            <button class="addexp bg-lime-400 rounded-lg p-2">ajout experience
+                            <button class="addexp bg-lime-400 rounded-lg p-2 mt-2">ajout experience
                             </button>
                         </div>
-                        <button type="button" onclick="add()" class="bg-blue-700 h-[50px] w-[200px] rounded-[20px] mt-3"><i class="fa-solid fa-floppy-disk "></i></button>
+                        <button type="button" onclick="add()"
+                            class="bg-lime-300 h-[50px] w-[200px] rounded-[20px] mt-3 hover:bg-lime-500"><i
+                                class="fa-solid fa-floppy-disk "></i></button>
                     </div>
 
                 </form>
@@ -209,102 +291,103 @@
             <div class="salls grid grid-cols-8 grid-rows-12 w-full h-full absolute">
 
 
-                    <div onclick="personnel()" class="section text-white  bg-green-500/30 col-start-1 col-end-4 row-start-1 row-end-5">
-                        <div class="empP"></div>
+                <div onclick="personnel()"
+                    class="section text-white  bg-green-500/30 col-start-1 col-end-4 row-start-1 row-end-5">
+                    <div class="empP"></div>
 
-                        <div class="room">personnel</div>
+                    <div class="room">personnel</div>
 
-                        <div class="all rounded-[50px] text-white ">
-                            <i class="fa-solid fa-plus"></i>
-                        </div>
-                        <div class=" element personnel bg-green-300 " hidden>
-                            <div class="content">
+                    <div class="all rounded-[50px] text-white ">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                    <div class=" element personnel bg-green-300 " hidden>
+                        <div class="content">
 
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div onclick="reception()"
-                        class="section text-white text-[20px] bg-red-700/30 col-span-3 row-start-5 row-end-13">
-                        <div class="empR"></div>
-                        <div class="room">reception</div>
+                <div onclick="reception()"
+                    class="section text-white text-[20px] bg-red-700/30 col-span-3 row-start-5 row-end-13">
+                    <div class="empR"></div>
+                    <div class="room">reception</div>
 
 
-                        <div class="all rounded-[50px]  text-white ">
-                            <i class="fa-solid fa-plus rounded-[50px] "></i>
-                        </div>
-                        <div class="element reception bg-green-300 " hidden>
-                            <div class="content">
+                    <div class="all rounded-[50px]  text-white ">
+                        <i class="fa-solid fa-plus rounded-[50px] "></i>
+                    </div>
+                    <div class="element reception bg-green-300 " hidden>
+                        <div class="content">
 
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div onclick="archives()"
-                        class="section text-white text-[20px] ml-10 bg-red-700/30 col-start-5 col-end-7 row-span-4">
-                        <div class="empA"></div>
-                        <div class="room">archives </div>
+                <div onclick="archives()"
+                    class="section text-white text-[20px] ml-10 bg-red-700/30 col-start-5 col-end-7 row-span-4">
+                    <div class="empA"></div>
+                    <div class="room">archives </div>
 
 
-                        <div class="all rounded-[50px]  text-white ">
+                    <div class="all rounded-[50px]  text-white ">
 
-                            <i class="fa-solid fa-plus rounded-[50px]  "></i>
-                        </div>
-                        <div class="element archives bg-green-300 " hidden>
-                            <div class="content">
+                        <i class="fa-solid fa-plus rounded-[50px]  "></i>
+                    </div>
+                    <div class="element archives bg-green-300 " hidden>
+                        <div class="content">
 
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div onclick="securite()"
-                        class="section text-white text-[20px] bg-red-700/30 ml- col-start-7 col-end-9 row-span-4">
-                        <div class="empS"></div>
-                        <div class="room"> securite </div>
+                <div onclick="securite()"
+                    class="section text-white text-[20px] bg-red-700/30 ml- col-start-7 col-end-9 row-span-4">
+                    <div class="empS"></div>
+                    <div class="room"> securite </div>
 
 
-                        <div class="all rounded-[50px] text-white ">
-                            <i class="fa-solid fa-plus rounded-[50px] "></i>
+                    <div class="all rounded-[50px] text-white ">
+                        <i class="fa-solid fa-plus rounded-[50px] "></i>
 
-                        </div>
-                        <div class="element securite bg-green-300 " hidden>
-                            <div class="content">
+                    </div>
+                    <div class="element securite bg-green-300 " hidden>
+                        <div class="content">
 
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div onclick="manager()"
-                        class="section text-white text-[20px] bg-green-700/30 ml-11 col-start-5 col-end-7 row-start-9 row-end-13">
-                        <div class="empM"></div>
-                        <div class="room">Conférence </div>
+                <div onclick="manager()"
+                    class="section text-white text-[20px] bg-green-700/30 ml-11 col-start-5 col-end-7 row-start-9 row-end-13">
+                    <div class="empM"></div>
+                    <div class="room">Conférence </div>
 
 
-                        <div class="all rounded-[50px] text-white ">
-                            <i class="fa-solid fa-plus rounded-[50px] "></i>
-                        </div>
-
-                        <div class="element manager bg-green-300 " hidden>
-                            <div class="content">
-                            </div>
-                        </div>
+                    <div class="all rounded-[50px] text-white ">
+                        <i class="fa-solid fa-plus rounded-[50px] "></i>
                     </div>
 
-                    <div onclick="serveurs()"
-                        class="section text-white text-[20px] bg-red-700/30 ml-7 col-start-7 col-end-9 row-start-9 row-end-13">
-
-                        <div class="empSER"></div>
-                        <div class="room"> serveurs</div>
-                        <div class="all rounded-[50px] text-white ">
-
-                            <i class="fa-solid fa-plus rounded-[50px] "></i>
-                        </div>
-                        <div class="element serveurs bg-green-300 " hidden>
-                            <div class="content">
-
-                            </div>
+                    <div class="element manager bg-green-300 " hidden>
+                        <div class="content">
                         </div>
                     </div>
+                </div>
+
+                <div onclick="serveurs()"
+                    class="section text-white text-[20px] bg-red-700/30 ml-7 col-start-7 col-end-9 row-start-9 row-end-13">
+
+                    <div class="empSER"></div>
+                    <div class="room"> serveurs</div>
+                    <div class="all rounded-[50px] text-white ">
+
+                        <i class="fa-solid fa-plus rounded-[50px] "></i>
+                    </div>
+                    <div class="element serveurs bg-green-300 " hidden>
+                        <div class="content">
+
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <img src="./image/plan.webp" alt="" class="w-full h-[500px] lg:h-auto -z-1">
