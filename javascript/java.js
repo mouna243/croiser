@@ -1,6 +1,5 @@
 let index = 0;
-let experiences = []
-
+const allemp = document.querySelector(".content")
 // data pour tester
 let data = [{
         id: 1,
@@ -67,7 +66,7 @@ let data = [{
 
 console.log(data);
 let compt = 0
-console.log(experiences)
+
 // Afficher les données dans le tableau
 function displaydata() {
     console.log("disply function");
@@ -79,19 +78,24 @@ function displaydata() {
         Worker.classList.add("worker")
         Worker.innerHTML = `
              <img src=${object.img} alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
-               <div class="info" >
+               <div class="info" >    
         <p><strong>Nom :</strong> ${object.name}</p>
         <p><strong>Rôle :</strong> ${object.role}</p>
-
     </div>
 
          `
+       
         Worker.style.borderRadius = "40px"
         Worker.style.backgroundColor = "#fda1c9"
         Worker.style.padding = "20px"
         Worker.style.width = "300px"
         Worker.style.display = "flex"
         Worker.style.margin = "20px"
+        Worker.addEventListener("click", ()=>{
+            afficherProfile(object)
+        })
+
+         
         content.appendChild(Worker)
     })
 
@@ -108,6 +112,8 @@ function creat() {
 function check(think) {
     console.log(think)
 }
+
+let addForm = document.getElementById("addForm");
 // Ajouter un nouvel employé
 function add() {
     console.log("add function")
@@ -117,11 +123,9 @@ function add() {
     let email = document.querySelector("#email").value;
     let tele = document.querySelector("#tele").value;
     let img = document.querySelector("#img").value;
-    const addexp = document.querySelector(".addexp")
     const exps = document.querySelector(".exps")
-    // check(endDate)
 
-
+    let experiences = []
     const toutexp = exps.querySelectorAll(".exp")
     Array.from(toutexp).forEach(exp => {
         let localEx = exp.querySelector("#local").value;
@@ -131,10 +135,11 @@ function add() {
 
         if (!startDate || !endDate || !nameEx || !localEx) {
             alert("replire tout les champs de l'experience")
+            return;
         } else {
             console.log("l'experience a ete bien remplie")
-
         }
+
         let experience = {
             localEx: localEx,
             nameEx: nameEx,
@@ -144,7 +149,19 @@ function add() {
 
         experiences.push(experience)
     })
-    // Vérifier que les dates sont correctes
+
+
+    if (name.length < 3) {
+        alert("enter un vrai nom")
+        return;
+    }
+    if (tele.length < 10 || tele.length > 13) {
+        alert("entrer un vrai num de telephone")
+        return;
+    }
+
+
+    // verifier si le champs est bien remplie 
     if (!name || !role || !email || !tele || !img) {
         alert("Veuillez remplire tout les information!");
         return;
@@ -173,13 +190,8 @@ function add() {
     formehidden()
 
     // pour vider les champs du formulaire
-    document.querySelector("#nom").value = "";
-    document.querySelector("#role").value = "";
-    document.querySelector("#email").value = "";
-    document.querySelector("#tele").value = "";
-    document.querySelector("#img").value = "";
-    document.querySelector("#start").value = "";
-    document.querySelector("#end").value = "";
+    addForm.reset();
+    toutexp.forEach(exp => exp.remove());
 }
 
 function formehidden() {
@@ -228,7 +240,7 @@ const addexp = document.querySelector(".addexp")
 addexp.addEventListener("click", () => {
     const exps = document.querySelector(".exps")
     const exp = document.createElement("div")
-    exp.className = "exp border border-black p-4 rounded-lg bg-red-500 w-full"
+    exp.className = "exp border border-black p-4 rounded-lg bg-violet-300 w-full"
     exp.innerHTML = ` <div class="input">
 
                                 <label for="local">l'entreprise</label><br>
@@ -291,7 +303,7 @@ function serveurs() {
             const element = document.querySelectorAll(".element")
             element.forEach(e => e.hidden = "true")
             displaydata();
-        salleremover(content , worker,emp , picked) 
+            salleremover(object, picked)
         });
     });
 };
@@ -332,12 +344,15 @@ function archives() {
             picked.addEventListener("click", function () {
                 content.appendChild(worker);
             });
+                 picked.addEventListener("click", ()=>{
+                afficherProfile(object)
+            })
 
             emp.appendChild(picked);
             const element = document.querySelectorAll(".element");
             element.forEach(e => e.hidden = true)
             displaydata();
-        salleremover(content , worker,emp , picked) 
+            salleremover(object, picked)
         });
     });
 };
@@ -373,12 +388,15 @@ function securite() {
              <button class="delet bg-red-500 border rounded-[20px] h-[30px] w-[30px] text-[20px]"><i class="fa-solid fa-x"></i></button>
            
         `;
+             picked.addEventListener("click", ()=>{
+                afficherProfile(object)
+            })
 
             emp.appendChild(picked);
             const element = document.querySelectorAll(".element")
             element.forEach(e => e.hidden = true);
             displaydata()
-        salleremover(content , worker,emp , picked) 
+            salleremover(object, picked)
         });
     });
 }
@@ -410,12 +428,14 @@ function personnel() {
              <button class="delet bg-red-500 border rounded-[20px] h-[30px] w-[30px] text-[20px]"><i class="fa-solid fa-x"></i></button>
            
         `;
-
+     picked.addEventListener("click", ()=>{
+                afficherProfile(object)
+            })
             emp.appendChild(picked);
             const element = document.querySelectorAll(".element");
             element.forEach(e => e.hidden = true)
             displaydata();
-        salleremover(content , worker,emp , picked) 
+            salleremover(object, picked)
         })
 
     });
@@ -456,13 +476,15 @@ function reception() {
         `;
 
 
-
+     picked.addEventListener("click", ()=>{
+                afficherProfile(object)
+            })
 
             emp.appendChild(picked);
             const element = document.querySelectorAll(".element");
             element.forEach(e => e.hidden = true)
             displaydata();
-        salleremover(content , worker,emp , picked) 
+            salleremover(object, picked)
         });
     });
 }
@@ -497,23 +519,77 @@ function manager() {
            
         `;
 
+            picked.addEventListener("click", ()=>{
+                afficherProfile(object)
+            })
+
             emp.appendChild(picked);
             let element = document.querySelectorAll(".element")
             element.forEach(e => e.hidden = true)
             displaydata()
-        salleremover(content , worker,emp , picked) 
+            salleremover(object, picked)
         });
     });
 }
 
-function salleremover(content , worker,emp , picked) {
+function salleremover(worker, picked) {
     const dele = document.querySelectorAll(".delet")
-    dele.forEach(e=> {
+    dele.forEach(e => {
 
         e.addEventListener("click", () => {
-            content.appendChild(worker);
-            emp.remove(picked)
+            picked.remove();
+            worker.local = "unassigned";
+            displaydata();
         })
 
     })
+}
+
+function afficherProfile(object) {
+
+
+    // Créer le conteneur de la popup
+    const popup = document.createElement("div");
+    popup.id = "profilePopup";
+    popup.className ="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-50";
+
+    // Contenu de la popup
+    const popupcontent = document.createElement("div");
+    popupcontent.className = "bg-white p-5 rounded-xl max-w-md w-full relative";
+
+    // Bouton fermer
+    const closeBtn = document.createElement("span");
+    closeBtn.className= "absolute top-2 right-4 text-2xl cursor-pointer text-red";
+    closeBtn.innerHTML= `<p> X </p>`
+    closeBtn.addEventListener("click", () => popup.remove());
+
+    // Générer le HTML des expériences
+    let expsHTML = object.experiences.map(e => `
+        <div class="experience mb-2">
+        <p><strong>L'entreprise:</strong> ${e.localEx}</p>
+        <p><strong>Service:</strong> ${e.nameEx}</p>
+        <p><strong>date de debut:</strong> ${e.startDate}</p>
+        <p><strong>date de fin:</strong> ${e.endDate}</p>
+        </div>
+    `).join('');
+
+    // Ajouter le contenu
+    popupcontent.innerHTML = `
+        <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-full mb-3">
+        <div class="info">
+            <p><strong>Nom :</strong> ${object.name}</p>
+            <p><strong>Rôle :</strong> ${object.role}</p>
+            <p><strong>E-mail :</strong> ${object.email}</p>
+            <p><strong>Num telephon :</strong> ${object.tele}</p>
+            <p><strong>Experiences:</strong></p>
+            ${expsHTML}
+        </div>
+    `;
+
+    // Ajouter bouton fermer
+    popupcontent.appendChild(closeBtn);
+    popup.appendChild(popupcontent);
+    document.body.appendChild(popup);
+
+    
 }
