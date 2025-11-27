@@ -403,7 +403,11 @@ function personnel() {
             object.local = "personnel"
             picked.local = object.local
             picked.dataset.id = object.id;
-            picked.innerHTML = worker.innerHTML;
+            picked.innerHTML =`
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+             <button class="delet bg-red-500 border rounded-[20px] h-[30px] w-[30px] text-[20px]"><i class="fa-solid fa-x"></i></button>
+           
+        `;
 
             emp.appendChild(picked);
             const element = document.querySelectorAll(".element");
@@ -412,5 +416,95 @@ function personnel() {
 
         })
 
+    });
+}
+
+function reception() {
+    displayforadd();
+
+    const content = document.querySelector(".reception.element");
+    const emp = document.querySelector(".empR");
+
+    content.innerHTML = "";
+    let filtredData = data.filter(d => d.role === "Reception" && d.local != "Reception")
+
+    filtredData.forEach(object => {
+        const worker = document.createElement("div");
+        worker.classList.add("worker");
+        worker.dataset.id = object.id;
+        worker.innerHTML = `
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+            
+        `;
+
+        content.appendChild(worker);
+
+        worker.addEventListener("click", function () {
+            if (emp.querySelector(`[data-id="${object.id}"]`)) return;
+
+            const picked = document.createElement("div");
+            picked.classList.add("emploi");
+            object.local = "Reception"
+            picked.local = object.local
+            picked.dataset.id = object.id;
+            picked.innerHTML = `
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+             <button class="delet bg-red-500 border rounded-[20px] h-[30px] w-[30px] text-[20px]"><i class="fa-solid fa-x"></i></button>
+           
+        `;
+
+
+            picked.addEventListener("click", function () {
+                content.appendChild(worker);
+            });
+
+            emp.appendChild(picked);
+            const element = document.querySelectorAll(".element");
+            element.forEach(e => e.hidden = true)
+            displaydata();
+        });
+    });
+}
+function manager() {
+    displayforadd();
+
+    const content = document.querySelector(".manager.element");
+    const emp = document.querySelector(".empM");
+
+    content.innerHTML = "";
+
+    data.forEach(object => {
+        const worker = document.createElement("div");
+        worker.classList.add("worker");
+        worker.dataset.id = object.id;
+        worker.innerHTML = `
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+        `;
+
+        content.appendChild(worker);
+
+        worker.addEventListener("click", function () {
+            if (emp.querySelector(`[data-id="${object.id}"]`)) return;
+
+            const picked = document.createElement("div");
+            picked.classList.add("worker");
+            picked.dataset.id = object.id;
+            picked.innerHTML =  `
+            <img src="${object.img}" alt="${object.name}" class="w-[50px] h-[50px] rounded-[50px]">
+             <button class="delet bg-red-500 border rounded-[20px] h-[30px] w-[30px] text-[20px]"><i class="fa-solid fa-x"></i></button>
+           
+        `;
+
+
+            picked.addEventListener("click", function() {
+
+                content.appendChild(worker);
+            });
+
+            emp.appendChild(picked);
+            let element = document.querySelectorAll(".element")
+            element.forEach(e => e.hidden = true)
+            displaydata()
+        });
     });
 }
